@@ -1,0 +1,10 @@
+node_modules/
+dist/
+artifacts/
+cache/
+cache_hardhat/
+coverage/
+typechain-types/
+ignition/deployments/
+.env
+*.log
