@@ -4,8 +4,8 @@ import type { Abi, Address } from "viem";
 // sibling /contracts project -- never hand-typed. Requires /contracts to
 // have been compiled at least once (`pnpm build` there) so these JSON
 // files exist. If this import fails, that's almost certainly why.
-import GhostFaucetTokenArtifact from "../../../contracts/artifacts/contracts/GhostFaucetToken.sol/GhostFaucetToken.json";
-import GhostSendWrapperArtifact from "../../../contracts/artifacts/contracts/GhostSendWrapper.sol/GhostSendWrapper.json";
+import GhostFaucetTokenArtifact from "../abis/GhostFaucetToken.json";
+import GhostSendWrapperArtifact from "../abis/GhostSendWrapper.json";
 
 export const GHOST_FAUCET_TOKEN_ADDRESS =
   "0x13b090ba5D6049ddFeEf34267194085eBE804AAD" as const satisfies Address;

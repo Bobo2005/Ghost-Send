@@ -99,4 +99,11 @@ Sepolia-funded wallet, and the app is live.
   processing the request on Sepolia — Ghost Send has no way to produce that
   proof itself, and no way to guarantee timing.
 - Activity only looks back roughly 50,000 blocks; older transfers won't
-  appear without a dedicated indexer.
+  appear without a dedicated indexer. 
+
+  - Contracts are deployed and fully functional on Sepolia, but source
+  verification on Etherscan is currently unresolved — the deployed
+  bytecode doesn't match a fresh local build under either compiler
+  profile, most likely because of intermediate changes made during
+  development after the actual deployment. Judges can review the full
+  source directly in this repo's `/contracts` folder instead.

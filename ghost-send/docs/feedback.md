@@ -83,3 +83,19 @@ were almost entirely about **discoverability** — missing local-test
 patterns, an unclear off-chain/on-chain boundary, and no visible path for
 the one piece (unwrap finalization) that genuinely can't be done
 client-side — rather than anything wrong with the protocol's design itself. 
+
+## Concrete finding: unwrap finalization, tested live
+
+I tested `unwrap()` twice against our real Sepolia deployment
+(`GhostSendWrapper` at `0x5d36BB0763f4A3653971762d67036bB8D72324Df`). Both
+calls succeeded cleanly and produced real, distinct request IDs
+(`0x0000aa36a723016a579381c5034e60834449cbde6160c744db2d9ae9c078b6cf` and
+`0x0000aa36a72301af0ed8e8465b0cd321873ee4f69355d6e5742eee8b84570e15`).
+Neither was ever finalized by an external caller during our observation
+window. We can't rule out that Sepolia's Nox gateway/relayer infrastructure
+simply hadn't picked up either request yet in the time we watched, but as
+tested, `finalizeUnwrap()` for these two requests remained pending with no
+visible external activity. This is the one part of the wrap → send →
+unwrap lifecycle we could not demonstrate completing end-to-end, and it's
+squarely because it depends on off-chain infrastructure the app (correctly,
+we think) has no way to trigger or substitute for itself.
