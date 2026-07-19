@@ -106,4 +106,12 @@ Sepolia-funded wallet, and the app is live.
   bytecode doesn't match a fresh local build under either compiler
   profile, most likely because of intermediate changes made during
   development after the actual deployment. Judges can review the full
-  source directly in this repo's `/contracts` folder instead.
+  source directly in this repo's `/contracts` folder instead. 
+
+  - Wallet connection uses a generic `injected()` connector only (works with
+  MetaMask/Rabby browser extensions on desktop, or a wallet app's own
+  built-in in-app browser on mobile). It does **not** support connecting
+  from a regular mobile browser tab to a separately-installed wallet app —
+  that requires WalletConnect, which wasn't in this MVP's scope. On mobile,
+  open the app's URL from inside your wallet app's built-in browser instead
+  of your phone's default browser.
