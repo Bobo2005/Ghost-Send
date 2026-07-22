@@ -8,10 +8,10 @@ import GhostFaucetTokenArtifact from "../abis/GhostFaucetToken.json";
 import GhostSendWrapperArtifact from "../abis/GhostSendWrapper.json";
 
 export const GHOST_FAUCET_TOKEN_ADDRESS =
-  "0x13b090ba5D6049ddFeEf34267194085eBE804AAD" as const satisfies Address;
+  "0x86d44972D6A227C766C40f96E41040944c3B2E60" as const satisfies Address;
 
 export const GHOST_SEND_WRAPPER_ADDRESS =
-  "0x5d36BB0763f4A3653971762d67036bB8D72324Df" as const satisfies Address;
+  "0xCf818c35b241d98da114f1482D5c2fc05229d2D2" as const satisfies Address;
 
 const ghostFaucetTokenAbi = GhostFaucetTokenArtifact.abi as Abi;
 const ghostSendWrapperAbi = GhostSendWrapperArtifact.abi as Abi;

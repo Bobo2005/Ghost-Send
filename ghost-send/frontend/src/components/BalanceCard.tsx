@@ -1,3 +1,4 @@
+import { toFriendlyError } from "../lib/errors";
 import { useState } from "react";
 import { formatUnits } from "viem";
 import { useConfidentialBalance } from "../hooks/useConfidentialBalance";
@@ -24,9 +25,7 @@ export function BalanceCard() {
       const { value } = await handleClient.decrypt(handle);
       setRevealedValue(BigInt(value));
     } catch (err) {
-      setRevealError(
-        err instanceof Error ? err.message : "Failed to decrypt balance.",
-      );
+      setRevealError(toFriendlyError(err));
     } finally {
       setIsRevealing(false);
     }

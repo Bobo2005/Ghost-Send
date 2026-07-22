@@ -1,3 +1,4 @@
+import { toFriendlyError } from "../lib/errors";
 import { useEffect, useState } from "react";
 import {
   useAccount,
@@ -82,6 +83,7 @@ export function WrapPanel({ onWrapped }: { onWrapped?: () => void }) {
   const isApproveBusy = approveWrite.isPending || approveReceipt.isLoading;
   const isWrapBusy = wrapWrite.isPending || wrapReceipt.isLoading;
   const error = approveWrite.error ?? wrapWrite.error;
+  const errorMessage = error ? toFriendlyError(error) : null;
 
   return (
     <div className="flex flex-col gap-4 rounded-xl border border-line bg-surface p-5">
@@ -149,8 +151,8 @@ export function WrapPanel({ onWrapped }: { onWrapped?: () => void }) {
           Wrapped {amountInput} gFAU into confidential gsUSD.
         </p>
       )}
-      {error && (
-        <p className="text-xs text-red-400">{error.message.split("\n")[0]}</p>
+      {errorMessage && (
+        <p className="text-xs text-red-400">{errorMessage}</p>
       )}
     </div>
   );

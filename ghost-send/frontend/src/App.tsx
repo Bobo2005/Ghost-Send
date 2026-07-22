@@ -7,8 +7,8 @@ import { WrapPanel } from "./components/WrapPanel";
 import { BalanceCard } from "./components/BalanceCard";
 import { PrivateSendPanel } from "./components/PrivateSendPanel";
 import { UnwrapPanel } from "./components/UnwrapPanel";
-import { ActivityLog } from "./components/ActivityLog";
-
+import { ActivityLog } from "./components/ActivityLog"; 
+import { ShareAccessPanel } from "./components/ShareAccessPanel";
 const queryClient = new QueryClient();
 
 export default function App() {
@@ -30,6 +30,7 @@ export default function App() {
             <FaucetButton />
             <WrapPanel />
             <BalanceCard />
+             <ShareAccessPanel />
             <PrivateSendPanel />
             <UnwrapPanel />
             <ActivityLog />

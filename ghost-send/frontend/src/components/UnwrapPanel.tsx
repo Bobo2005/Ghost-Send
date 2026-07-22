@@ -257,7 +257,7 @@
 //     </div>
 //   );
 // } 
-
+import { toFriendlyError } from "../lib/errors";
 import { useEffect, useRef, useState } from "react";
 import {
   useAccount,
@@ -336,12 +336,8 @@ export function UnwrapPanel() {
       }
       setUnwrapRequestId(requestId);
       setPhase("waiting-finalize");
-    } catch (err) {
-      setErrorMessage(
-        `Unwrap request sent, but couldn't read the request id from the transaction${
-          err instanceof Error ? `: ${err.message}` : ""
-        }`,
-      );
+    } catch {
+      setErrorMessage(toFriendlyError(new Error("Missing unwrap request id")));
       setPhase("error");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -394,9 +390,7 @@ export function UnwrapPanel() {
         args: [address, address, handle, handleProof],
       });
     } catch (err) {
-      setErrorMessage(
-        err instanceof Error ? err.message.split("\n")[0] : "Failed to encrypt amount.",
-      );
+      setErrorMessage(toFriendlyError(err));
       setPhase("error");
     }
   }
@@ -500,7 +494,7 @@ export function UnwrapPanel() {
               </button>
               {finalizeWrite.error && (
                 <p className="text-red-400">
-                  {finalizeWrite.error.message.split("\n")[0]}
+                  {toFriendlyError(finalizeWrite.error)}
                 </p>
               )}
             </div>
@@ -524,7 +518,7 @@ export function UnwrapPanel() {
 
       {(errorMessage || submitError) && (
         <p className="text-xs text-red-400">
-          {errorMessage ?? submitError?.message.split("\n")[0]}
+          {errorMessage ?? (submitError ? toFriendlyError(submitError) : null)}
         </p>
       )}
     </div>

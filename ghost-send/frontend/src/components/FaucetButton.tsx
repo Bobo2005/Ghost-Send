@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAccount, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { ghostFaucetToken } from "../config/contracts";
+import { toFriendlyError } from "../lib/errors";
 
 const MAX_MINT_PER_CALL = 1000; // must match GhostFaucetToken.MAX_MINT_PER_CALL
 
@@ -41,6 +42,7 @@ export function FaucetButton() {
   }
 
   const error = writeError ?? receiptError;
+  const errorMessage = error ? toFriendlyError(error) : null;
   const isBusy = isSubmitting || isConfirming;
 
   return (
@@ -84,9 +86,9 @@ export function FaucetButton() {
           Minted {amount} gFAU. Tokens are in your wallet now.
         </p>
       )}
-      {error && (
+      {errorMessage && (
         <p className="text-xs text-red-400">
-          {error.message.split("\n")[0]}
+          {errorMessage}
         </p>
       )}
     </div>

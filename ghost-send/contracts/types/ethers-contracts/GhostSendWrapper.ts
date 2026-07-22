@@ -6,9 +6,9 @@ import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, Typed
   
 
   export interface GhostSendWrapperInterface extends Interface {
-    getFunction(nameOrSignature: "confidentialBalanceOf" | "confidentialTotalSupply" | "confidentialTransfer(address,bytes32,bytes)" | "confidentialTransfer(address,bytes32)" | "confidentialTransferAndCall(address,bytes32,bytes)" | "confidentialTransferAndCall(address,bytes32,bytes,bytes)" | "confidentialTransferFrom(address,address,bytes32,bytes)" | "confidentialTransferFrom(address,address,bytes32)" | "confidentialTransferFromAndCall(address,address,bytes32,bytes,bytes)" | "confidentialTransferFromAndCall(address,address,bytes32,bytes)" | "contractURI" | "decimals" | "finalizeUnwrap" | "inferredTotalSupply" | "isOperator" | "maxTotalSupply" | "name" | "onTransferReceived" | "setOperator" | "supportsInterface" | "symbol" | "underlying" | "unwrap(address,address,bytes32,bytes)" | "unwrap(address,address,bytes32)" | "unwrapRequester" | "wrap"): FunctionFragment;
+    getFunction(nameOrSignature: "confidentialBalanceOf" | "confidentialTotalSupply" | "confidentialTransfer(address,bytes32,bytes)" | "confidentialTransfer(address,bytes32)" | "confidentialTransferAndCall(address,bytes32,bytes)" | "confidentialTransferAndCall(address,bytes32,bytes,bytes)" | "confidentialTransferFrom(address,address,bytes32,bytes)" | "confidentialTransferFrom(address,address,bytes32)" | "confidentialTransferFromAndCall(address,address,bytes32,bytes,bytes)" | "confidentialTransferFromAndCall(address,address,bytes32,bytes)" | "contractURI" | "decimals" | "finalizeUnwrap" | "grantBalanceView" | "inferredTotalSupply" | "isOperator" | "maxTotalSupply" | "name" | "onTransferReceived" | "setOperator" | "supportsInterface" | "symbol" | "underlying" | "unwrap(address,address,bytes32,bytes)" | "unwrap(address,address,bytes32)" | "unwrapRequester" | "wrap"): FunctionFragment;
 
-    getEvent(nameOrSignatureOrTopic: "ConfidentialTransfer" | "OperatorSet" | "UnwrapFinalized" | "UnwrapRequested"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "ConfidentialTransfer" | "OperatorSet" | "UnwrapFinalized" | "UnwrapRequested" | "ViewAccessGranted"): EventFragment;
 
     encodeFunctionData(functionFragment: 'confidentialBalanceOf', values: [AddressLike]): string;
 encodeFunctionData(functionFragment: 'confidentialTotalSupply', values?: undefined): string;
@@ -23,6 +23,7 @@ encodeFunctionData(functionFragment: 'confidentialTransferFromAndCall(address,ad
 encodeFunctionData(functionFragment: 'contractURI', values?: undefined): string;
 encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
 encodeFunctionData(functionFragment: 'finalizeUnwrap', values: [BytesLike, BytesLike]): string;
+encodeFunctionData(functionFragment: 'grantBalanceView', values: [AddressLike]): string;
 encodeFunctionData(functionFragment: 'inferredTotalSupply', values?: undefined): string;
 encodeFunctionData(functionFragment: 'isOperator', values: [AddressLike, AddressLike]): string;
 encodeFunctionData(functionFragment: 'maxTotalSupply', values?: undefined): string;
@@ -50,6 +51,7 @@ decodeFunctionResult(functionFragment: 'confidentialTransferFromAndCall(address,
 decodeFunctionResult(functionFragment: 'contractURI', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'finalizeUnwrap', data: BytesLike): Result;
+decodeFunctionResult(functionFragment: 'grantBalanceView', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'inferredTotalSupply', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'isOperator', data: BytesLike): Result;
 decodeFunctionResult(functionFragment: 'maxTotalSupply', data: BytesLike): Result;
@@ -106,6 +108,18 @@ decodeFunctionResult(functionFragment: 'wrap', data: BytesLike): Result;
       export type InputTuple = [receiver: AddressLike, amount: BytesLike];
       export type OutputTuple = [receiver: string, amount: string];
       export interface OutputObject {receiver: string, amount: string };
+      export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
+      export type Filter = TypedDeferredTopicFilter<Event>
+      export type Log = TypedEventLog<Event>
+      export type LogDescription = TypedLogDescription<Event>
+    }
+
+  
+
+    export namespace ViewAccessGrantedEvent {
+      export type InputTuple = [owner: AddressLike, viewer: AddressLike];
+      export type OutputTuple = [owner: string, viewer: string];
+      export interface OutputObject {owner: string, viewer: string };
       export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>
       export type Filter = TypedDeferredTopicFilter<Event>
       export type Log = TypedEventLog<Event>
@@ -246,6 +260,14 @@ decodeFunctionResult(functionFragment: 'wrap', data: BytesLike): Result;
     
     finalizeUnwrap: TypedContractMethod<
       [unwrapRequestId: BytesLike, decryptedAmountAndProof: BytesLike, ],
+      [void],
+      'nonpayable'
+    >
+    
+
+    
+    grantBalanceView: TypedContractMethod<
+      [viewer: AddressLike, ],
       [void],
       'nonpayable'
     >
@@ -423,6 +445,11 @@ getFunction(nameOrSignature: 'finalizeUnwrap'): TypedContractMethod<
       [void],
       'nonpayable'
     >;
+getFunction(nameOrSignature: 'grantBalanceView'): TypedContractMethod<
+      [viewer: AddressLike, ],
+      [void],
+      'nonpayable'
+    >;
 getFunction(nameOrSignature: 'inferredTotalSupply'): TypedContractMethod<
       [],
       [bigint],
@@ -493,6 +520,7 @@ getFunction(nameOrSignature: 'wrap'): TypedContractMethod<
 getEvent(key: 'OperatorSet'): TypedContractEvent<OperatorSetEvent.InputTuple, OperatorSetEvent.OutputTuple, OperatorSetEvent.OutputObject>;
 getEvent(key: 'UnwrapFinalized'): TypedContractEvent<UnwrapFinalizedEvent.InputTuple, UnwrapFinalizedEvent.OutputTuple, UnwrapFinalizedEvent.OutputObject>;
 getEvent(key: 'UnwrapRequested'): TypedContractEvent<UnwrapRequestedEvent.InputTuple, UnwrapRequestedEvent.OutputTuple, UnwrapRequestedEvent.OutputObject>;
+getEvent(key: 'ViewAccessGranted'): TypedContractEvent<ViewAccessGrantedEvent.InputTuple, ViewAccessGrantedEvent.OutputTuple, ViewAccessGrantedEvent.OutputObject>;
 
     filters: {
       
@@ -510,6 +538,10 @@ getEvent(key: 'UnwrapRequested'): TypedContractEvent<UnwrapRequestedEvent.InputT
 
       'UnwrapRequested(address,bytes32)': TypedContractEvent<UnwrapRequestedEvent.InputTuple, UnwrapRequestedEvent.OutputTuple, UnwrapRequestedEvent.OutputObject>;
       UnwrapRequested: TypedContractEvent<UnwrapRequestedEvent.InputTuple, UnwrapRequestedEvent.OutputTuple, UnwrapRequestedEvent.OutputObject>;
+    
+
+      'ViewAccessGranted(address,address)': TypedContractEvent<ViewAccessGrantedEvent.InputTuple, ViewAccessGrantedEvent.OutputTuple, ViewAccessGrantedEvent.OutputObject>;
+      ViewAccessGranted: TypedContractEvent<ViewAccessGrantedEvent.InputTuple, ViewAccessGrantedEvent.OutputTuple, ViewAccessGrantedEvent.OutputObject>;
     
     };
   }

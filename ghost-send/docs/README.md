@@ -115,3 +115,31 @@ Sepolia-funded wallet, and the app is live.
   that requires WalletConnect, which wasn't in this MVP's scope. On mobile,
   open the app's URL from inside your wallet app's built-in browser instead
   of your phone's default browser.
+
+  - Balance-view grants (`grantBalanceView`) are permanent and cannot be
+  revoked — this is a limitation of the underlying Nox protocol, not a
+  design choice of this app. Grant access only to addresses you'd trust
+  with permanent visibility into that balance.
+- A granted viewer currently has no dedicated UI to look up and reveal
+  someone else's balance by address — only the connected account's own
+  balance is revealable through `BalanceCard` today.
+
+  ### Sharing balance view access
+
+You can permanently grant another address permission to view your
+confidential gsUSD balance, without giving them any ability to spend it.
+
+1. In the **Share balance view** panel, enter the address you want to
+   grant access to.
+2. Read the warning carefully and check the confirmation box — **this
+   cannot be undone**. Nox's protocol has no revoke path for persistent
+   view grants (only same-transaction temporary grants can be revoked).
+3. Confirm the transaction in your wallet.
+4. The granted address now appears in the "Shared with" list below the
+   form.
+
+**Known gap:** granting view access is fully functional and verified
+on-chain (see `docs/ARCHITECTURE.md`), but there is currently no UI for
+the *granted viewer* to actually look up and reveal someone else's
+balance — `BalanceCard` only ever reveals the connected account's own
+balance. This is a real, acknowledged limitation, not a hidden one.

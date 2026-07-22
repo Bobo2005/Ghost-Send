@@ -1,3 +1,4 @@
+import { toFriendlyError } from "../lib/errors";
 import { useState } from "react";
 import { useAccount, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { parseUnits, isAddress } from "viem";
@@ -13,7 +14,7 @@ export function PrivateSendPanel() {
   const [recipient, setRecipient] = useState("");
   const [amountInput, setAmountInput] = useState("");
   const [isEncrypting, setIsEncrypting] = useState(false);
-  const [encryptError, setEncryptError] = useState<string | null>(null);
+  const [encryptError, setEncryptError] = useState<unknown>(null);
   const [lastSentTo, setLastSentTo] = useState<string | null>(null);
 
   const {
@@ -60,9 +61,7 @@ export function PrivateSendPanel() {
         args: [recipient as `0x${string}`, handle, handleProof],
       });
     } catch (err) {
-      setEncryptError(
-        err instanceof Error ? err.message.split("\n")[0] : "Failed to encrypt amount.",
-      );
+      setEncryptError(err);
     } finally {
       setIsEncrypting(false);
     }
@@ -77,7 +76,8 @@ export function PrivateSendPanel() {
   }
 
   const isBusy = isEncrypting || isSubmitting || isConfirming;
-  const error = encryptError ?? (writeError ?? receiptError)?.message.split("\n")[0];
+  const rawError = encryptError ?? writeError ?? receiptError;
+  const error = rawError ? toFriendlyError(rawError) : null;
 
   return (
     <div className="flex flex-col gap-4 rounded-xl border border-line bg-surface p-5">

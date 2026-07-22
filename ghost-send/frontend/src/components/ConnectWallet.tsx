@@ -1,3 +1,4 @@
+import { toFriendlyError } from "../lib/errors";
 import { useAccount, useConnect, useDisconnect, useSwitchChain } from "wagmi";
 import { sepolia } from "wagmi/chains";
 
@@ -38,7 +39,7 @@ export function ConnectWallet() {
           </p>
         )}
         {connectError && (
-          <p className="text-xs text-red-400">{connectError.message}</p>
+          <p className="text-xs text-red-400">{toFriendlyError(connectError)}</p>
         )}
       </div>
     );
@@ -76,5 +77,4 @@ export function ConnectWallet() {
       </button>
     </div>
   );
-}  
-
+}
