@@ -6,12 +6,21 @@ iExec's Nox protocol, send it with the amount hidden on-chain, and unwrap
 back to the public token whenever you want. Ghost Send never modifies your
 wallet — it's a plain web app that talks to it like any other dApp.
 
-## Contracts
+##  Old Contracts
 
 | Contract | Sepolia address |
 |---|---|
 | `GhostFaucetToken` (public gFAU test token) | `0x13b090ba5D6049ddFeEf34267194085eBE804AAD` |
 | `GhostSendWrapper` (confidential gsUSD) | `0x5d36BB0763f4A3653971762d67036bB8D72324Df` |
+
+
+##  New Contracts redeployed fresh after that feature was added
+
+| Contract | Sepolia address |
+|---|---|
+| `GhostFaucetToken` (public gFAU test token) | `0x86d44972D6A227C766C40f96E41040944c3B2E60` |
+| `GhostSendWrapper` (confidential gsUSD) | `0xCf818c35b241d98da114f1482D5c2fc05229d2D2` |
+
 
 ## Repo layout 
 
